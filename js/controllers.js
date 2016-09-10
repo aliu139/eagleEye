@@ -14,28 +14,70 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
   ];
   $scope.daySeries = ['Series A', 'Series B'];
 
-  $scope.series = ['Series A', 'Series B'];
+  $scope.series = ['Endpoint 1', 'January', 'February', 'March', 
+                    'April', 'May', 'June', 'July', 'August', 'September',
+                    'October', 'November', 'December', 'Endpoint 2'];
 
-    $scope.data = [
-      [{
-        x: 15,
+  $scope.data = [
+    [{
+      x: 10,
+      y: 15,
+      r: 20
+    }],
+    [{
+      x: 20,
+      y: 30,
+      r: 50
+    }],
+    [{
+      x: 30,
+      y: 5,
+      r: 20
+    }],
+    [{
+      x: 40,
+      y: 10,
+      r: 20
+    }],
+    [{
+      x: 50,
+      y: 15,
+      r: 20
+    }],
+    [{
+      x: 60,
+      y: 5,
+      r: 20
+    }],
+    [{
+      x: 70,
+      y: 15,
+      r: 20
+    }],
+    [{
+      x: 80,
+      y: 15,
+      r: 20
+    }],
+    [{
+      x: 90,
+      y: 15,
+      r: 20
+    }],
+    [{
+      x: 100,
+      y: 15,
+      r: 20
+    }],
+    [{
+      x: 110,
+      y: 15,
+      r: 20
+    }],
+    [{
+        x: 120,
         y: 15,
         r: 20
-      }],
-      [{
-        x: 0,
-        y: 0,
-        r: 0
-      }],
-      [{
-        x: 60,
-        y: 60,
-        r: 0
-      }],
-      [{
-        x: 40,
-        y: 15,
-        r: 50
       }]
     ];
 
@@ -67,6 +109,23 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
     return ageArray;
   }
 
+  var getDayData = function(data){
+    var fa1 = data.fa1;
+    var ans = [];
+    ans.push(fa1);
+    ans.push(fa1);
+
+    return ans;
+  };
+
+  var getMonthData = function(data){
+    var fa2 = data.fa2;
+    for(i in fa2){
+      var j = i % 12;
+      $scope.data[j][0].r = fa2[i]/5;
+    }
+  }
+
   window.setInterval(function(){ 
     $http({
       method: 'GET',
@@ -74,7 +133,8 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
     }).then(function successCallback(response) {
       $scope.mfData = getMF(response.data);
       $scope.ageData = getAgeData(response.data);
-
+      $scope.dayData = getDayData(response.data);
+      getMonthData(response.data);
 
     }, function errorCallback(response) {
       console.log(response);
