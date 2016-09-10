@@ -33,7 +33,7 @@
     <script src="js/controllers.js"> </script>
 
     <div class="bs-component">
-      <div class="navbar navbar-default">
+      <div class="navbar navbar-default" style="margin:0">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -87,7 +87,7 @@
 
     <div class="container-fluid" ng-controller="main.ctrl">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-2 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Reports</a></li>
@@ -102,25 +102,41 @@
             <li><a href="">More navigation</a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="margin-left:0">
+        <div class="col-sm-10 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="margin-left:0">
           <h1 class="page-header">Dashboard</h1>
-          <canvas id="doughnut" class="chart chart-doughnut"
-            chart-data="mfData" chart-labels="mfLabels">
-          </canvas>
+          <div class="col-sm-6 col-sm-offset-3" style="margin-left:0">
+            <canvas id="doughnut" class="chart chart-doughnut"
+              chart-data="mfData" chart-labels="mfLabels">
+            </canvas>
 
-          <canvas id="bar" class="chart chart-bar"
-            chart-data="ageData" chart-labels="ageLabels" chart-series="series">
-          </canvas>
+            <div style="height:65px;">
+            </div>
 
-          <canvas id="base" class="chart chart-line"
-            chart-data="dayData" chart-labels="dayLabels">
-          </canvas> 
+            <canvas id="base" class="chart chart-line"
+              chart-data="dayData" chart-labels="dayLabels">
+            </canvas>
 
-          <canvas id="base" class="chart-bubble" chart-data="data"
-            chart-series="series" >
-          </canvas> 
+            <div style="height:75px;">
+            </div>
+          </div>
 
-          <div class="row placeholders">
+          <div class="col-sm-6 col-sm-offset-9" style="margin-left:0">
+            <canvas id="bar" class="chart chart-bar"
+              chart-data="ageData" chart-labels="ageLabels" chart-series="series">
+            </canvas>
+
+            <div style="height:65px;">
+            </div>
+            
+            <canvas id="base" class="chart-bubble" chart-data="data"
+              chart-series="series" >
+            </canvas>
+
+            <div style="height:75px;">
+            </div>
+          </div> 
+
+          <div class="row placeholders" style="margin-top:100px;">
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
               <h4>Label</h4>
