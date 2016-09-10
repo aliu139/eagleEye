@@ -1,0 +1,70 @@
+var numbers = list.all.keys(input);
+
+var newNumbers = numbers.reduce(function(newArray, number){
+//  Genders
+    if (a == 0) & (b==0) {
+    newArray == {}
+    }
+
+    if a == 1    {
+      if input[number][1] == 'M' {
+        newArray.push(number);
+      }
+    }
+
+    if b == 1{
+    if input[number][1] == 'F' {
+      newArray.push(number);
+      }
+    }
+    return newArray
+}, []);
+
+newArray = {}
+var newNumbers2 = newNumbers.reduce(function(newArray, number){
+//  Age
+    if (d == 0) & (e==0) & (f==0){
+    newArray == {}
+    }
+
+    if d == 1    {
+      if input[number][2] == 'Y' {
+        newArray.push(number);
+      }
+    }
+
+    if e == 1{
+    if input[number][1] == 'A' {
+      newArray.push(number);
+      }
+    }
+
+    if f == 1{
+    if input[number][1] == 'O' {
+      newArray.push(number);
+      }
+    }
+    return newArray
+}, []);
+
+newArray = {}
+
+var newNumbers3 = newNumbers2.reduce(function(newArray, number){
+//  Purchase
+      if (input[number][3] >= g) & (input[number][3] <= h){
+        newArray.push(number);
+      }
+    return newArray
+}, []);
+
+newArray = {}
+
+var newNumbers4 = newNumbers3.reduce(function(newArray, number){
+//  Time Spent
+      if (input[number][4] >= i) & (input[number][4] <= j){
+        newArray.push(number);
+      }
+    return newArray
+}, []);
+
+newArray = {}
