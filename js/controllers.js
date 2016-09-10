@@ -147,3 +147,29 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
   }, 500);
 
 }]);
+
+controllers.controller('filter.ctrl', ['$scope', function($scope){
+  $scope.mfData = [50,50];
+  $scope.mfLabels = ["Male", "Female"];
+
+  var slider = document.getElementById('slider');
+  var timeSlider = document.getElementById('timeSlider');
+
+      noUiSlider.create(slider, {
+        start: [20, 80],
+        connect: true,
+        range: {
+          'min': 0,
+          'max': 100
+        }
+      });
+
+      noUiSlider.create(timeSlider, {
+        start: [20, 80],
+          connect: true,
+          range: {
+            'min': 0,
+            'max': 100
+          }
+      });
+}]);
