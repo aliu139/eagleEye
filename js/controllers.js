@@ -1,6 +1,11 @@
 var controllers = angular.module("ctrls", ['chart.js']);
 
 controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
+  $scope.currentPanel = 0;
+  $scope.changePanel = function(newPanel){
+    $scope.currentPanel = newPanel;
+  };
+
   $scope.mfData = [50,50];
   $scope.mfLabels = ["Male", "Female"];
 
