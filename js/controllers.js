@@ -1,75 +1,81 @@
 var controllers = angular.module("ctrls", ['chart.js']);
 
 controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
-	$scope.test = "derpderp";
-
-  $scope.data = [300, 500, 100];
-	$scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-
   $scope.mfData = [50,50];
   $scope.mfLabels = ["Male", "Female"];
 
-  $scope.peopleNumData = [0,0,0,0];
-  $scope.peopleNumLabels = ["0", "1", "2", "3"];
+  $scope.ageData = [10,10,10];
+  $scope.ageLabels = ["Young", "Adult", "Elderly"];  
+
+  $scope.dayLabels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  $scope.dayData = [
+    [28, 48, 40, 19, 86, 27, 90],
+    [28, 48, 40, 19, 86, 27, 90]
+  ];
+  $scope.daySeries = ['Series A', 'Series B'];
+
+  $scope.series = ['Series A', 'Series B'];
+
+    $scope.data = [
+      [{
+        x: 15,
+        y: 15,
+        r: 20
+      }],
+      [{
+        x: 0,
+        y: 0,
+        r: 0
+      }],
+      [{
+        x: 60,
+        y: 60,
+        r: 0
+      }],
+      [{
+        x: 40,
+        y: 15,
+        r: 50
+      }]
+    ];
 
   $scope.increment = function(){
   	$scope.data[1] = $scope.data[1] + 500;
   };
 
-  var maleFemaleRatio = function(data){
-    var initial = [0,0];
-    var reducer = function(total, value){
-      if("male" in value){
-        total[0] = total[0] + 1;
-        return total;
-      }
-      else{
-        total[1] = total[1] + 1;
-        return total;
-      }
-    };
-    var res = data.reduce(reducer, initial);
-    
-    return res;
-  };
+  var getMF = function(data){
+    var male = data.male ? data.male : 0;
+    var female = data.female ? data.female : 0;
 
-  var averageNumberOfPeople = function(data){
-    var initial = {};
-    var reducer = function(total, value){
-      var num = ("male" in value) ? value.male.toString() : value.female.toString();
-      if(total != undefined && num in total){
-        total[num]= total[num] + 1; 
-      }
-      else{
-        total[num] = 1;
-      }
+    var mfArray = [];
+    mfArray.push(male);
+    mfArray.push(female);
 
-      return total;
-    };
-    var res = data.reduce(reducer, initial);
+    return mfArray;
+  }
 
-    var keys = Object.keys(res);
-    var values = [];
-    for(k in keys){
-      values.push(res[keys[k]]);
-    }
+  var getAgeData = function(data){
+    var young = data.young ? data.young : 0;
+    var adult = data.adult ? data.adult : 0;
+    var elderly = data.elderly ? data.elderly : 0;
 
-    var ans = [];
-    ans.push(keys);
-    ans.push(values);
-    return ans;
-  };
+    var ageArray =  [];
+    ageArray.push(young);
+    ageArray.push(adult);
+    ageArray.push(elderly);
+
+    return ageArray;
+  }
 
   window.setInterval(function(){ 
     $http({
       method: 'GET',
       url: 'https://eagleeye123.firebaseio.com/data.json'
     }).then(function successCallback(response) {
-      // console.log(response.data);
-      $scope.mfData = maleFemaleRatio(response.data);
-      $scope.peopleNumData = averageNumberOfPeople(response.data)[1];
-      $scope.peopleNumLabels = averageNumberOfPeople(response.data)[0];
-      // $scope.data = response.data;
+      $scope.mfData = getMF(response.data);
+      $scope.ageData = getAgeData(response.data);
+
+
     }, function errorCallback(response) {
       console.log(response);
     });
