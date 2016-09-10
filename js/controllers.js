@@ -148,28 +148,41 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
 
 }]);
 
-controllers.controller('filter.ctrl', ['$scope', function($scope){
+controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http){
   $scope.mfData = [50,50];
   $scope.mfLabels = ["Male", "Female"];
 
   var slider = document.getElementById('slider');
   var timeSlider = document.getElementById('timeSlider');
 
-      noUiSlider.create(slider, {
-        start: [20, 80],
-        connect: true,
-        range: {
-          'min': 0,
-          'max': 100
-        }
-      });
+  noUiSlider.create(slider, {
+    start: [20, 80],
+    connect: true,
+    range: {
+      'min': 0,
+      'max': 100
+    }
+  });
 
-      noUiSlider.create(timeSlider, {
-        start: [20, 80],
-          connect: true,
-          range: {
-            'min': 0,
-            'max': 100
-          }
-      });
+  noUiSlider.create(timeSlider, {
+    start: [20, 80],
+      connect: true,
+      range: {
+        'min': 0,
+        'max': 100
+      }
+  });
+
+  window.setInterval(function(){ 
+    $http({
+      method: 'GET',
+      url: 'https://eagleeye123.firebaseio.com/users.json'
+    }).then(function successCallback(response) {
+      console.log(response);
+
+    }, function errorCallback(response) {
+      console.log(response);
+    });
+  }, 500);
+
 }]);
