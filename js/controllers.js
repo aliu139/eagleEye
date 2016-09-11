@@ -131,6 +131,10 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
     }
   }
 
+  $scope.numOfPeople = 10;
+
+  $scope.rawData = [];
+
   window.setInterval(function(){ 
     $http({
       method: 'GET',
@@ -139,8 +143,19 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
       $scope.mfData = getMF(response.data);
       $scope.ageData = getAgeData(response.data);
       $scope.dayData = getDayData(response.data);
+      $scope.numOfPeople = response.data.nop;
       getMonthData(response.data);
+    }, function errorCallback(response) {
+      console.log(response);
+    });
 
+    $http({
+      method: 'GET',
+      url: 'https://eagleeye123.firebaseio.com/users.json'
+    }).then(function successCallback(response) {
+      var initialData = response.data;
+      // console.log(initialData);
+      $scope.rawData = initialData;
     }, function errorCallback(response) {
       console.log(response);
     });
