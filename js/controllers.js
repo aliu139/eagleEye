@@ -97,7 +97,7 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
       url: 'https://eagleeye123.firebaseio.com/users.json'
     }).then(function successCallback(response) {
       var initialData = response.data;
-      // console.log(initialData);
+      console.log(initialData);
       $scope.rawData = initialData;
     }, function errorCallback(response) {
       console.log(response);
@@ -243,6 +243,8 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     }).then(function successCallback(response) {
       var initialData = response.data;
 
+      console.log(initialData);
+
       if($scope.firstTime || ($scope.prevData && $scope.prevData.length != initialData.length)){
         var runningData = ($scope.cMale) ? initialData : filterOut("gender", "male", initialData);
         runningData = ($scope.cFemale) ? runningData : filterOut("gender", "female", runningData);
@@ -262,12 +264,12 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     }, function errorCallback(response) {
       console.log(response);
     });
-  }, 50);
+  }, 100);
 
   window.setTimeout(function(){
     $scope.labelName = "OVERALL";
     $scope.submit();
-  }, 500);
+  }, 1000);
 
   $scope.options = {
     scales: {
