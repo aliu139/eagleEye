@@ -131,11 +131,11 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
   var timeSlider = document.getElementById('timeSlider');
 
   noUiSlider.create(slider, {
-    start: [20, 80],
+    start: [0, 80],
     connect: true,
     range: {
       'min': 0,
-      'max': 100
+      'max': 80
     }
   });
 
@@ -219,6 +219,34 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     $scope.firstTime = true;
   });
 
+  $scope.$watch("purchaseStart[0]", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("purchaseStart[1]", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("timeStart[0]", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("timeStart[1]", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  var filterByPurchase = function(data, start, end){
+    var ans = []
+    for(each in data){
+      var price = (data[each].bags + Math.random() * 3) * 10;
+      if (price >= start && price <= end){
+        ans.push(data[each]);
+      }
+    }
+
+    return ans;
+  }
+
   window.setInterval(function(){ 
     $scope.purchaseStart = slider.noUiSlider.get();
     $scope.timeStart = timeSlider.noUiSlider.get();
@@ -238,7 +266,7 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
         runningData = ($scope.cYoung) ? runningData : filterByAge("age", 0, 20, runningData);
         runningData = ($scope.cAdult) ? runningData : filterByAge("age", 21, 44, runningData);
         runningData = ($scope.cElderly) ? runningData : filterByAge("age", 45, 1000, runningData);
-
+        runningData = filterByPurchase(runningData, $scope.purchaseStart[0], $scope.purchaseStart[1]);
         var formatted = convertToChart(runningData);
 
         $scope.series = formatted[0];
