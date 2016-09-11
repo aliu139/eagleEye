@@ -89,12 +89,12 @@
               <div class="form-group" style="margin: 0;padding: 0; padding-left: 20px;">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"><span class="checkbox-material"></span> Male
+                    <input type="checkbox" ng-model="cMale"><span class="checkbox-material"></span> Male
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"><span class="checkbox-material"></span> Female
+                    <input type="checkbox" ng-model="cFemale"><span class="checkbox-material"></span> Female
                   </label>
                 </div>
               </div>
@@ -104,27 +104,29 @@
               <div class="form-group" style="margin: 0;padding: 0; padding-left: 20px;">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"><span class="checkbox-material"></span> Young
+                    <input type="checkbox" ng-model="cYoung"><span class="checkbox-material"></span> Young
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"><span class="checkbox-material"></span> Adult
+                    <input type="checkbox" ng-model="cAdult"><span class="checkbox-material"></span> Adult
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"><span class="checkbox-material"></span> Elderly
+                    <input type="checkbox" ng-model="cElderly"><span class="checkbox-material"></span> Elderly
                   </label>
                 </div>
               </div>
             </li>
             <li>
               <a> Purchases </a>
+              <a> {{purchaseStart}}</a>
               <div id="slider" style="margin-left:20px; margin-right:20px"> </div>
             </li>
             <li>
               <a> Time Spent </a>
+              <a> {{timeStart}}</a>
               <div id="timeSlider" style="margin-left:20px; margin-right:20px"> </div>
             </li>
           </ul>
@@ -132,8 +134,9 @@
 
         <div class="col-sm-8 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="margin-left:0">
           <h1 class="page-header"> Filter </h1>
-          <canvas id="doughnut" class="chart chart-doughnut"
-            chart-data="mfData" chart-labels="mfLabels">
+          <canvas id="line" class="chart chart-line" chart-data="data"
+            chart-labels="labels" chart-series="series" chart-options="options"
+            chart-dataset-override="datasetOverride" chart-click="onClick">
           </canvas> 
         </div>
 

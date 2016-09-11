@@ -149,8 +149,40 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
 }]);
 
 controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http){
-  $scope.mfData = [50,50];
-  $scope.mfLabels = ["Male", "Female"];
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+  $scope.series = ['Series A', 'Series B'];
+  $scope.data = [
+    [65, 59, 80, 81, 56, 55, 40],
+    [28, 48, 40, 19, 86, 27, 90]
+  ];
+  $scope.onClick = function (points, evt) {
+    console.log(points, evt);
+  };
+  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+  $scope.options = {
+    scales: {
+      yAxes: [
+        {
+          id: 'y-axis-1',
+          type: 'linear',
+          display: true,
+          position: 'left'
+        },
+        {
+          id: 'y-axis-2',
+          type: 'linear',
+          display: true,
+          position: 'right'
+        }
+      ]
+    }
+  };
+
+  $scope.cMale = true;
+  $scope.cFemale = true;
+  $scope.cYoung = true;
+  $scope.cAdult = true;
+  $scope.cElderly = true;
 
   var slider = document.getElementById('slider');
   var timeSlider = document.getElementById('timeSlider');
@@ -173,16 +205,51 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
       }
   });
 
+  $scope.purchaseStart = slider.noUiSlider.get();
+  $scope.timeStart = timeSlider.noUiSlider.get();
+
+  var filterOut = function(attr, val, data){
+    var ans = []
+    for(each in data){
+      if (data[each][attr] != val){
+        ans.push(data[each]);
+      }
+    }
+
+    return ans;
+  };
+
+  var filterByAge = function(attr, bound1, bound2, data){
+    var ans = []
+    for(each in data){
+      if (!(data[each][attr] <= bound2 && data[each][attr] >= bound1)){
+        ans.push(data[each]);
+      }
+    }
+
+    return ans;
+  };
+
   window.setInterval(function(){ 
+    $scope.purchaseStart = slider.noUiSlider.get();
+    $scope.timeStart = timeSlider.noUiSlider.get();
+
     $http({
       method: 'GET',
       url: 'https://eagleeye123.firebaseio.com/users.json'
     }).then(function successCallback(response) {
-      console.log(response);
+      var initialData = response.data;
+      var runningData = ($scope.cMale) ? initialData : filterOut("gender", "male", initialData);
+      runningData = ($scope.cFemale) ? runningData : filterOut("gender", "female", runningData);
+      runningData = ($scope.cYoung) ? runningData : filterByAge("age", 0, 20, runningData);
+      runningData = ($scope.cAdult) ? runningData : filterByAge("age", 21, 44, runningData);
+      runningData = ($scope.cElderly) ? runningData : filterByAge("age", 45, 1000, runningData);
+
+      console.log(runningData);
 
     }, function errorCallback(response) {
       console.log(response);
     });
-  }, 500);
+  }, 100);
 
 }]);
