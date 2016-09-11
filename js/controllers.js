@@ -23,67 +23,11 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
                     'April', 'May', 'June', 'July', 'August', 'September',
                     'October', 'November', 'December', 'Endpoint 2'];
 
-  $scope.data = [
-    [{
-      x: 10,
-      y: 15,
-      r: 20
-    }],
-    [{
-      x: 20,
-      y: 30,
-      r: 50
-    }],
-    [{
-      x: 30,
-      y: 5,
-      r: 20
-    }],
-    [{
-      x: 40,
-      y: 10,
-      r: 20
-    }],
-    [{
-      x: 50,
-      y: 15,
-      r: 20
-    }],
-    [{
-      x: 60,
-      y: 5,
-      r: 20
-    }],
-    [{
-      x: 70,
-      y: 15,
-      r: 20
-    }],
-    [{
-      x: 80,
-      y: 15,
-      r: 20
-    }],
-    [{
-      x: 90,
-      y: 15,
-      r: 20
-    }],
-    [{
-      x: 100,
-      y: 15,
-      r: 20
-    }],
-    [{
-      x: 110,
-      y: 15,
-      r: 20
-    }],
-    [{
-        x: 120,
-        y: 15,
-        r: 20
-      }]
+  $scope.labels = ['00:00 - 00:10', '00:10 - 00:20', '00:20 - 00:30', '00:30 - 00:40', '00:40 - 00:50', '00:50 - 01:00'];
+  $scope.series = ['Your Customers'];
+
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55]
     ];
 
   $scope.increment = function(){
@@ -124,10 +68,9 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
   };
 
   var getMonthData = function(data){
-    var fa2 = data.fa2;
-    for(i in fa2){
-      var j = i % 12;
-      $scope.data[j][0].r = fa2[i]/5;
+    var fa3 = data.fa3;
+    for(i in fa3){
+      $scope.data[i] = fa3[i];
     }
   }
 

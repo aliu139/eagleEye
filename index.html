@@ -103,7 +103,7 @@
             </li>
             <li ng-class="{active: currentPanel == 4}">
               <a href="#" ng-click="changePanel(4)"> 
-                Data By Month
+                Data By Minute
                 <span class="sr-only" ng-if="currentPanel == 4">(current)</span>
               </a>
             </li>
@@ -119,9 +119,10 @@
             <div style="height:65px;">
             </div>
 
-            <canvas id="base" class="chart chart-line"
-              chart-data="dayData" chart-labels="dayLabels" ng-click="changePanel(3)">
-            </canvas>
+            <canvas id="base" class="chart chart-bar"
+              chart-data="data" chart-labels="labels" 
+              ng-click="changePanel(4)">
+            </canvas> 
 
             <div style="height:75px;">
             </div>
@@ -136,9 +137,8 @@
             <div style="height:65px;">
             </div>
             
-            <canvas id="base" class="chart-bubble" chart-data="data"
-              chart-series="series" 
-              ng-click="changePanel(4)">
+            <canvas id="base" class="chart chart-line"
+              chart-data="dayData" chart-labels="dayLabels" ng-click="changePanel(3)">
             </canvas>
 
             <div style="height:75px;">
@@ -168,9 +168,10 @@
         </div>
 
         <div class="col-sm-10 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="margin-left:0" ng-if="currentPanel == 4">
-          <h1 class="page-header"> Data By Month </h1>
-          <canvas id="base" class="chart-bubble" chart-data="data"
-              chart-series="series" >
+          <h1 class="page-header"> Data By Minute </h1>
+          <canvas id="base" class="chart chart-bar"
+              chart-data="data" chart-labels="labels" 
+              ng-click="changePanel(4)">
             </canvas>
         </div>
 
