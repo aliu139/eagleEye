@@ -19,6 +19,7 @@ while a==1:
   list_one = df_unclustered['time_entered'].tolist()
   list_two = df_unclustered['time_leaving'].tolist()
 
+
   for x in df_unclustered:
       time_entered = [i for i in list_one if (i >= df_unclustered['plus_time_one']) & (i <= df_unclustered['minus_time_one'])]
       time_leaving = [i for i in list_two if (i >= df_unclustered['plus_time_two']) & (i <= df_unclustered['minus_time_two'])]
