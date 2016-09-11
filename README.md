@@ -4,7 +4,7 @@ Think Google Analytics... but for the real world
 ![Eagle Eye](res/ee.png "EagleEye")
 
 ## Team
-* (Austin Liu)[https://github.com/aliu139]
+* [Austin Liu](https://github.com/aliu139)
 * Benjamin Jiang
 * Mahima Shah
 * Namit Juneja
