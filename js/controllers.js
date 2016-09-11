@@ -107,25 +107,17 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
 }]);
 
 controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http){
-  $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-    [{
-      x: 40,
-      y: 10,
-      r: 20
-    }],
-    [{
-      x: 10,
-      y: 40,
-      r: 50
-    }]
-  ];
-
   $scope.cMale = true;
   $scope.cFemale = true;
   $scope.cYoung = true;
   $scope.cAdult = true;
   $scope.cElderly = true;
+
+  $scope.finalLabels = ['Customers'];
+  $scope.finalSeries = [];
+
+  $scope.finalData = [
+  ];
 
   var slider = document.getElementById('slider');
   var timeSlider = document.getElementById('timeSlider');
@@ -173,27 +165,19 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     return ans;
   };
 
-  var convertToChart = function(data){
-    var names = [];
-    var points = [];
-    for(each in data){
-      names.push(each);
-      points.push([{
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        r: (data[each].bags + Math.random() * 3) * 10 
-      }]);
-    }
-
-    var ans = [];
-    ans.push(names);
-    ans.push(points);
-
-    return ans;
-  }
-
   $scope.prevData = null;
   $scope.firstTime = true;
+  $scope.labelName = "";
+
+  $scope.submit = function(){
+    $scope.finalSeries.push($scope.labelName);
+    $scope.labelName = "";
+
+    var sub = [];
+    sub.push($scope.runningData.length);
+
+    $scope.finalData.push(sub);
+  }
 
   $scope.$watch("cMale", function(newValue, oldValue) {
     $scope.firstTime = true;
@@ -247,6 +231,8 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     return ans;
   }
 
+  $scope.runningData = [];
+
   window.setInterval(function(){ 
     $scope.purchaseStart = slider.noUiSlider.get();
     $scope.timeStart = timeSlider.noUiSlider.get();
@@ -258,19 +244,15 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
       var initialData = response.data;
 
       if($scope.firstTime || ($scope.prevData && $scope.prevData.length != initialData.length)){
-        // console.log("prev");
-        // console.log($scope.prevData);
-        // console.log(initialData);
         var runningData = ($scope.cMale) ? initialData : filterOut("gender", "male", initialData);
         runningData = ($scope.cFemale) ? runningData : filterOut("gender", "female", runningData);
         runningData = ($scope.cYoung) ? runningData : filterByAge("age", 0, 20, runningData);
         runningData = ($scope.cAdult) ? runningData : filterByAge("age", 21, 44, runningData);
         runningData = ($scope.cElderly) ? runningData : filterByAge("age", 45, 1000, runningData);
         runningData = filterByPurchase(runningData, $scope.purchaseStart[0], $scope.purchaseStart[1]);
-        var formatted = convertToChart(runningData);
+        
+        $scope.runningData = runningData;
 
-        $scope.series = formatted[0];
-        $scope.data = formatted[1];
         $scope.firstTime = false;
       }
       if($scope.prevData == null){
@@ -280,6 +262,11 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     }, function errorCallback(response) {
       console.log(response);
     });
+  }, 100);
+
+  window.setTimeout(function(){
+    $scope.labelName = "OVERALL";
+    $scope.submit();
   }, 500);
 
 }]);

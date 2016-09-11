@@ -78,12 +78,6 @@
       <div class="row">
         <div class="col-sm-4 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active">
-              <a href='#'> 
-                Filter
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
             <li>
               <a> Gender </a>
               <div class="form-group" style="margin: 0;padding: 0; padding-left: 20px;">
@@ -121,21 +115,31 @@
             </li>
             <li>
               <a> Purchases </a>
-              <a> {{purchaseStart}}</a>
-              <div id="slider" style="margin-left:20px; margin-right:20px"> </div>
+              <a> {{purchaseStart}} </a>
+              <div id="slider" style="margin-left:40px; margin-right:40px"> </div>
             </li>
             <li>
               <a> Time Spent </a>
               <a> {{timeStart}}</a>
-              <div id="timeSlider" style="margin-left:20px; margin-right:20px"> </div>
+              <div id="timeSlider" style="margin-left:40px; margin-right:40px"> </div>
+            </li>
+            <li>
+              <div class="form-group label-floating is-empty">
+                <label for="i5" class="control-label"> Label Name</label>
+                <input type="text" class="form-control" id="i5" ng-model="labelName" style="margin-left:10px; margin-right:10px">
+              </div>
+            </li>
+            <li>
+              <a class="btn btn-raised btn-info" ng-click="submit()" style="margin-left:10px; margin-right:10px"> Create Bar! <div class="ripple-container"></div></a>
             </li>
           </ul>
         </div>
 
         <div class="col-sm-8 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="margin-left:0">
           <h1 class="page-header"> Filter </h1>
-          <canvas id="base" class="chart-bubble" chart-data="data"
-            chart-series="series" >
+
+          <canvas id="bar" class="chart chart-bar"
+            chart-data="finalData" chart-labels="finalLabels" chart-series="finalSeries">
           </canvas> 
         </div>
 
