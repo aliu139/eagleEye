@@ -234,6 +234,33 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     return ans;
   }
 
+  $scope.prevData = null;
+  $scope.firstTime = true;
+
+  $scope.$watch("cMale", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("cFemale", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("cYoung", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("cAdult", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("cElderly", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
+  $scope.$watch("cAdult", function(newValue, oldValue) {
+    $scope.firstTime = true;
+  });
+
   window.setInterval(function(){ 
     $scope.purchaseStart = slider.noUiSlider.get();
     $scope.timeStart = timeSlider.noUiSlider.get();
@@ -243,19 +270,30 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
       url: 'https://eagleeye123.firebaseio.com/users.json'
     }).then(function successCallback(response) {
       var initialData = response.data;
-      var runningData = ($scope.cMale) ? initialData : filterOut("gender", "male", initialData);
-      runningData = ($scope.cFemale) ? runningData : filterOut("gender", "female", runningData);
-      runningData = ($scope.cYoung) ? runningData : filterByAge("age", 0, 20, runningData);
-      runningData = ($scope.cAdult) ? runningData : filterByAge("age", 21, 44, runningData);
-      runningData = ($scope.cElderly) ? runningData : filterByAge("age", 45, 1000, runningData);
 
-      var formatted = convertToChart(runningData);
-      $scope.series = formatted[0];
-      $scope.data = formatted[1];
+      if($scope.firstTime || ($scope.prevData && $scope.prevData.length != initialData.length)){
+        console.log("prev");
+        console.log($scope.prevData);
+        console.log(initialData);
+        var runningData = ($scope.cMale) ? initialData : filterOut("gender", "male", initialData);
+        runningData = ($scope.cFemale) ? runningData : filterOut("gender", "female", runningData);
+        runningData = ($scope.cYoung) ? runningData : filterByAge("age", 0, 20, runningData);
+        runningData = ($scope.cAdult) ? runningData : filterByAge("age", 21, 44, runningData);
+        runningData = ($scope.cElderly) ? runningData : filterByAge("age", 45, 1000, runningData);
+
+        var formatted = convertToChart(runningData);
+
+        $scope.series = formatted[0];
+        $scope.data = formatted[1];
+        $scope.firstTime = false;
+      }
+      if($scope.prevData == null){
+        $scope.prevData = initialData;
+      }
 
     }, function errorCallback(response) {
       console.log(response);
     });
-  }, 2000);
+  }, 500);
 
 }]);
