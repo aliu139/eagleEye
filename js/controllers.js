@@ -221,9 +221,9 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     for(each in data){
       names.push(each);
       points.push([{
-        x: Math.random() * 200,
-        y: Math.random() * 200,
-        r: (data[each].bags + Math.random() * 3) * 2 
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        r: (data[each].bags + Math.random() * 3) * 10 
       }]);
     }
 
@@ -256,6 +256,6 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     }, function errorCallback(response) {
       console.log(response);
     });
-  }, 1000);
+  }, 2000);
 
 }]);
