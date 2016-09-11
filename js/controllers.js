@@ -149,34 +149,19 @@ controllers.controller('main.ctrl', ["$scope", "$http", function($scope, $http){
 }]);
 
 controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http){
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];
   $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
+    [{
+      x: 40,
+      y: 10,
+      r: 20
+    }],
+    [{
+      x: 10,
+      y: 40,
+      r: 50
+    }]
   ];
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
-  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-  $scope.options = {
-    scales: {
-      yAxes: [
-        {
-          id: 'y-axis-1',
-          type: 'linear',
-          display: true,
-          position: 'left'
-        },
-        {
-          id: 'y-axis-2',
-          type: 'linear',
-          display: true,
-          position: 'right'
-        }
-      ]
-    }
-  };
 
   $scope.cMale = true;
   $scope.cFemale = true;
@@ -230,6 +215,25 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     return ans;
   };
 
+  var convertToChart = function(data){
+    var names = [];
+    var points = [];
+    for(each in data){
+      names.push(each);
+      points.push([{
+        x: Math.random() * 200,
+        y: Math.random() * 200,
+        r: (data[each].bags + Math.random() * 3) * 2 
+      }]);
+    }
+
+    var ans = [];
+    ans.push(names);
+    ans.push(points);
+
+    return ans;
+  }
+
   window.setInterval(function(){ 
     $scope.purchaseStart = slider.noUiSlider.get();
     $scope.timeStart = timeSlider.noUiSlider.get();
@@ -245,11 +249,13 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
       runningData = ($scope.cAdult) ? runningData : filterByAge("age", 21, 44, runningData);
       runningData = ($scope.cElderly) ? runningData : filterByAge("age", 45, 1000, runningData);
 
-      console.log(runningData);
+      var formatted = convertToChart(runningData);
+      $scope.series = formatted[0];
+      $scope.data = formatted[1];
 
     }, function errorCallback(response) {
       console.log(response);
     });
-  }, 100);
+  }, 1000);
 
 }]);
