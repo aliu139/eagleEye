@@ -125,7 +125,7 @@
             </li>
             <li>
               <div class="form-group label-floating is-empty">
-                <label for="i5" class="control-label"> Label Name</label>
+                <label for="i5" class="control-label" style="margin-left:10px; margin-right:10px"c> Label Name</label>
                 <input type="text" class="form-control" id="i5" ng-model="labelName" style="margin-left:10px; margin-right:10px">
               </div>
             </li>
@@ -139,7 +139,8 @@
           <h1 class="page-header"> Filter </h1>
 
           <canvas id="bar" class="chart chart-bar"
-            chart-data="finalData" chart-labels="finalLabels" chart-series="finalSeries">
+            chart-data="finalData" chart-labels="finalLabels" chart-series="finalSeries"
+            chart-options="options">
           </canvas> 
         </div>
 

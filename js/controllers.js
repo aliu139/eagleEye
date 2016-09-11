@@ -262,11 +262,22 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
     }, function errorCallback(response) {
       console.log(response);
     });
-  }, 100);
+  }, 50);
 
   window.setTimeout(function(){
     $scope.labelName = "OVERALL";
     $scope.submit();
   }, 500);
+
+  $scope.options = {
+    scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                beginAtZero: true   // minimum value will be 0.
+            }
+        }]
+    }
+  };
 
 }]);
