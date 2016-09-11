@@ -258,9 +258,9 @@ controllers.controller('filter.ctrl', ['$scope', '$http', function($scope, $http
       var initialData = response.data;
 
       if($scope.firstTime || ($scope.prevData && $scope.prevData.length != initialData.length)){
-        console.log("prev");
-        console.log($scope.prevData);
-        console.log(initialData);
+        // console.log("prev");
+        // console.log($scope.prevData);
+        // console.log(initialData);
         var runningData = ($scope.cMale) ? initialData : filterOut("gender", "male", initialData);
         runningData = ($scope.cFemale) ? runningData : filterOut("gender", "female", runningData);
         runningData = ($scope.cYoung) ? runningData : filterByAge("age", 0, 20, runningData);
